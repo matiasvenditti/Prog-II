@@ -1,19 +1,17 @@
-import java.awt.geom.Point2D;
+//import java.awt.geom.Point2D;
 import java.util.GregorianCalendar;
 
 /**
  * Created by Matias on 11/10/2016.
  */
-public class Cliente {
+public class Cliente extends Persona{
 
-    private String name;
+
     private Point2D coordenadasCliente;
-    private double saldo;
 
-    public Cliente(String name, Point2D coordenadasCliente, double saldo) {
-        this.name = name;
+    public Cliente(String nombre, String telefono, String email, TarjetaCredito tarjeta, Point2D coordenadasCliente, double saldo) {
+        super(nombre, telefono, email, tarjeta);
         this.coordenadasCliente = coordenadasCliente;
-        this.saldo = saldo;
     }
 
     public void solicitarViaje(int pasajeros, Point2D coordenadasDestino, GregorianCalendar fecha) {
