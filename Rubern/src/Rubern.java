@@ -59,11 +59,17 @@ public class Rubern {
             if (c.estaDisponible(solicitud.getFecha()) && (c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()) <= distanciaMinima)){
                 calcularCantidadAutos(solicitud.getPasajeros(),c);
                 costosDeImagen.put(c,calcularCantidadAutos(solicitud.getPasajeros(),c)*((c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()))/250));
+                //Faltaria agregar la calidad del auto en el costo de imagen.
             }
         }
+        Map.Entry<Chofer, Double> minimo = null;
         for (Map.Entry<Chofer, Double> entry: costosDeImagen.entrySet()){
-            //OBTENER EL MENOR COSTO DE IMAGEN.
+            if (minimo == null || minimo.getValue() > entry.getValue()){
+                minimo = entry;
+            }
+
         }
+        minimo.getKey().enviarViaje(solicitud);
     }
 
     public int calcularCantidadAutos(int numPasajeros, Chofer chofer){

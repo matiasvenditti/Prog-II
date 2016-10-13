@@ -33,4 +33,9 @@ public class Solicitud {
     public GregorianCalendar getFecha() {
         return fecha;
     }
+
+    public String toString(){
+        String result = "Inicio: " + inicio +"\nDestino: " + fin + "\nCantidad de pasajeros: " + pasajeros + "Fecha: " + fecha.toString();
+        return result;
+    }
 }
