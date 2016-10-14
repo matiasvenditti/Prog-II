@@ -36,4 +36,8 @@ public class Chofer extends Persona{
     public Auto getAuto() {
         return auto;
     }
+
+//    public void finalizarViaje(Solicitud solicitud){
+//        disponible = true;
+//    }
 }
