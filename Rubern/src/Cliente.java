@@ -21,4 +21,10 @@ public class Cliente extends Persona{
             throw new RuntimeException("El cliente ya se encuentra en el destino.");
         }
     }
+
+    public void pagarViaje(double costo, Solicitud viaje, Chofer chofer){
+
+        getTarjetaCredito().disminuir(costo);
+        chofer.getTarjetaCredito().cargarSaldo(costo - 0.1*costo);
+    }
 }

@@ -32,13 +32,15 @@ public class Chofer extends Persona{
         //Le asigno un 50% de chances de que el chofer acepte o no el viaje con un numero random.
         Random random = new Random();
         int number = random.nextInt(2);
-        double distance = 0;
-        if (number == 0){
+        double distance = Math.sqrt(Math.pow(solicitud.getFin().getxPosition()-solicitud.getInicio().getxPosition(),2)+(Math.pow(solicitud.getFin().getyPosition()-solicitud.getInicio().getyPosition(),2)));
+        costo = 15 + (distancia/100);
+        if (number == 0 && solicitud.getCliente().getTarjetaCredito().getSaldo() > costo){
             System.out.println("El chofer acepto el viaje: " + solicitud.toString());
-            distancia = Math.sqrt(Math.pow(solicitud.getFin().getxPosition()-solicitud.getInicio().getxPosition(),2)+(Math.pow(solicitud.getFin().getyPosition()-solicitud.getInicio().getyPosition(),2)));
+
             System.out.println("Con un costo de: " + distancia);
             aceptaViaje = true;
-            costo = 15 + (distancia/100);
+
+            solicitud.getCliente().pagarViaje(costo, solicitud, this);
         }
         else{
             System.out.println("El chofer no acepto el viaje: " + solicitud.toString());

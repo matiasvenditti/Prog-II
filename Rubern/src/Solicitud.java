@@ -39,6 +39,10 @@ public class Solicitud {
         return fecha;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
     public String toString(){
         String result = "Inicio: " + inicio +"\nDestino: " + fin + "\nCantidad de pasajeros: " + pasajeros + "Fecha: " + fecha.toString();
         return result;
