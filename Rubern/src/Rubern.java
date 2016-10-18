@@ -13,6 +13,13 @@ public class Rubern {
     private double distanciaMinima;
     private Map<Chofer, Double> costosDeImagen;
 
+    public static void main (String[] args){
+        //Hace que se escriba en el fichero de texto los cobros y pagos. Aún quedaría meterlo para que directamente cuando el cliente pague se ejecute.
+        EscritorFichero escritor=new EscritorFichero();
+        //escritor.escribir();
+    }
+
+
 
     public Rubern(double distanciaMinima){
         choferes = new ArrayList<Chofer>();
