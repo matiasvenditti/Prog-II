@@ -9,14 +9,19 @@ public class Solicitud {
     private Point2D inicio;
     private Point2D fin;
     private GregorianCalendar fecha;
+    private Cliente cliente;
 
-    public Solicitud(int pasajeros, Point2D inicio, Point2D fin, GregorianCalendar fecha){
+    public Solicitud(int pasajeros, Point2D inicio, Point2D fin, GregorianCalendar fecha, Cliente cliente){
         this.pasajeros = pasajeros;
         this.inicio = inicio;
         this.fin = fin;
         this.fecha = fecha;
+        int identificador= (int) (Math.random()*1000000);
+        this.cliente = cliente;
 
     }
+
+
 
     public int getPasajeros() {
         return pasajeros;

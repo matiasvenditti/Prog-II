@@ -16,7 +16,7 @@ public class Cliente extends Persona{
 
     public void solicitarViaje(int pasajeros, Point2D coordenadasDestino, GregorianCalendar fecha) {
         if (!coordenadasDestino.equals(coordenadasCliente)) {
-            Solicitud solicitudDeViaje = new Solicitud(pasajeros, coordenadasDestino, coordenadasCliente, fecha);
+            Solicitud solicitudDeViaje = new Solicitud(pasajeros, coordenadasDestino, coordenadasCliente, fecha, this);
         } else {
             throw new RuntimeException("El cliente ya se encuentra en el destino.");
         }

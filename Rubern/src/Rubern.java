@@ -13,6 +13,7 @@ public class Rubern {
     private double distanciaMinima;
     private Map<Chofer, Double> costosDeImagen;
 
+
     public Rubern(double distanciaMinima){
         choferes = new ArrayList<Chofer>();
         clientes = new ArrayList<Cliente>();
@@ -40,6 +41,9 @@ public class Rubern {
 
         }
         minimo.getKey().enviarViaje(solicitud);
+        if (minimo.getKey().isAceptaViaje()){
+            double comision = minimo.getKey().costo*0.1;
+        }
     }
 
     public int calcularCantidadAutos(int numPasajeros, Chofer chofer){
