@@ -1,5 +1,3 @@
-//import java.awt.geom.Point2D;
-import java.util.GregorianCalendar;
 
 /**
  * Created by Matias on 11/10/2016.
@@ -14,9 +12,9 @@ public class Cliente extends Persona{
         this.coordenadasCliente = coordenadasCliente;
     }
 
-    public void solicitarViaje(int pasajeros, Point2D coordenadasDestino, GregorianCalendar fecha) {
+    public void solicitarViaje(int pasajeros, Point2D coordenadasDestino, double hora) {
         if (!coordenadasDestino.equals(coordenadasCliente)) {
-            Solicitud solicitudDeViaje = new Solicitud(pasajeros, coordenadasDestino, coordenadasCliente, fecha, this);
+            Solicitud solicitudDeViaje = new Solicitud(pasajeros, coordenadasDestino, coordenadasCliente, hora, this);
         } else {
             throw new RuntimeException("El cliente ya se encuentra en el destino.");
         }

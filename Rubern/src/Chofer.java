@@ -1,4 +1,3 @@
-import java.util.GregorianCalendar;
 import java.util.Random;
 
 /**
@@ -21,8 +20,8 @@ public class Chofer extends Persona{
         this.jornada = jornada;
     }
 
-    public boolean estaDisponible(GregorianCalendar fechaActual){
-        if (jornada.containsHour(fechaActual) && disponible == true){
+    public boolean estaDisponible(double hora){
+        if (jornada.containsHour(hora) && disponible ){
             return true;
         }
         return false;
