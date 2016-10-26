@@ -6,15 +6,21 @@ public class Cliente extends Persona{
 
 
     private Point2D coordenadasCliente;
+    private boolean viajando;
 
-    public Cliente(String nombre, String telefono, String email, TarjetaCredito tarjeta, Point2D coordenadasCliente, double saldo) {
-        super(nombre, telefono, email, tarjeta);
-        this.coordenadasCliente = coordenadasCliente;
+    public void setViajando(boolean estado) {
+        viajando = estado;
     }
 
-    public void solicitarViaje(int pasajeros, Point2D coordenadasDestino, double hora) {
-        if (!coordenadasDestino.equals(coordenadasCliente)) {
-            Solicitud solicitudDeViaje = new Solicitud(pasajeros, coordenadasDestino, coordenadasCliente, hora, this);
+    public Cliente(String nombre, String telefono, String email, TarjetaCredito tarjeta) {
+        super(nombre, telefono, email, tarjeta);
+        viajando = false;
+
+    }
+
+    public void solicitarViaje(int pasajeros,Point2D coordenadasInicio, Point2D coordenadasDestino, double hora) {
+        if (!coordenadasDestino.equals(coordenadasInicio)) {
+            Solicitud solicitudDeViaje = new Solicitud(pasajeros,coordenadasInicio, coordenadasDestino, hora, this);
         } else {
             throw new RuntimeException("El cliente ya se encuentra en el destino.");
         }

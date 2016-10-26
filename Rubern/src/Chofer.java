@@ -54,6 +54,7 @@ public class Chofer extends Persona{
         disponible = false;
         this.getAuto().actualizarCoordenadas(solicitud.getFin());
         solicitud.getCliente().pagarViaje(costo,solicitud,this);
+        solicitud.getCliente().setViajando(true);
     }
 
     public boolean isAceptaViaje() {

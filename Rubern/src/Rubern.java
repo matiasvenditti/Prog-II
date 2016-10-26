@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +12,8 @@ public class Rubern {
     private ArrayList<Chofer> choferes;
     private ArrayList<Cliente> clientes;
     private double distanciaMinima;
-    private Map<Chofer, Double> costosDeImagen;
+
+    private ArrayList<Tupla> costosDeImagen;
 
     public static void main (String[] args){
         //Hace que se escriba en el fichero de texto los cobros y pagos. Aún quedaría meterlo para que directamente cuando el cliente pague se ejecute.
@@ -24,7 +26,7 @@ public class Rubern {
     public Rubern(double distanciaMinima){
         choferes = new ArrayList<Chofer>();
         clientes = new ArrayList<Cliente>();
-        costosDeImagen = new HashMap<Chofer,Double>();
+        costosDeImagen = new ArrayList<Tupla>();
         this.distanciaMinima = distanciaMinima;
 
     }
@@ -36,20 +38,15 @@ public class Rubern {
         for(Chofer c: choferes){
             if (c.estaDisponible(solicitud.getFecha()) && (c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()) <= distanciaMinima)){
                 calcularCantidadAutos(solicitud.getPasajeros(),c);
-                costosDeImagen.put(c,calcularCantidadAutos(solicitud.getPasajeros(),c)*((c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()))/250));
+                costosDeImagen.add(new Tupla (c,calcularCantidadAutos(solicitud.getPasajeros(),c)*((c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()))/250)));
                 //Faltaria agregar la calidad del auto en el costo de imagen.
             }
         }
-        Map.Entry<Chofer, Double> minimo = null;
-        for (Map.Entry<Chofer, Double> entry: costosDeImagen.entrySet()){
-            if (minimo == null || minimo.getValue() > entry.getValue()){
-                minimo = entry;
-            }
-
-        }
-        minimo.getKey().enviarViaje(solicitud);
-        if (minimo.getKey().isAceptaViaje()){
-            double comision = minimo.getKey().costo*0.1;
+        Collections.sort(costosDeImagen,new ComparadorDeCostos());
+        Tupla minimo = costosDeImagen.get(0);
+        minimo.getChofer().enviarViaje(solicitud);
+        if (minimo.getChofer().isAceptaViaje()){
+            double comision = minimo.getChofer().costo*0.1;
         }
     }
 
