@@ -65,7 +65,11 @@ public class Chofer extends Persona{
         return auto;
     }
 
-//    public void finalizarViaje(Solicitud solicitud){
-//        disponible = true;
-//    }
+    public void finalizarViaje(){
+        if (!disponible){
+            disponible = true;
+            aceptaViaje = false;
+        }
+        throw new RuntimeException("El chofer no se encuetra en ningun viaje.");
+    }
 }

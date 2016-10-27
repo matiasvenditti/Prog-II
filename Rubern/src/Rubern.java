@@ -43,11 +43,14 @@ public class Rubern {
             }
         }
         Collections.sort(costosDeImagen,new ComparadorDeCostos());
-        Tupla minimo = costosDeImagen.get(0);
-        minimo.getChofer().enviarViaje(solicitud);
-        if (minimo.getChofer().isAceptaViaje()){
-            double comision = minimo.getChofer().costo*0.1;
+        for (int i = 0; i< costosDeImagen.size(); i++){
+            Tupla minimo = costosDeImagen.get(i);
+            minimo.getChofer().enviarViaje(solicitud);
+            if (costosDeImagen.get(i).getChofer().isAceptaViaje()){
+                double comision = minimo.getChofer().costo*0.1;
+            }
         }
+
     }
 
     public int calcularCantidadAutos(int numPasajeros, Chofer chofer){
