@@ -3,10 +3,10 @@
  */
 public class TarjetaCredito {
 
-    private String numero;
+    private long numero;
     private double saldo;
 
-    public TarjetaCredito(String numero, double saldo){
+    public TarjetaCredito(long numero, double saldo){
         this.numero = numero;
         this.saldo = saldo;
     }
@@ -31,5 +31,9 @@ public class TarjetaCredito {
         else{
             throw new IllegalArgumentException("Se debe cargar una cantidad positiva de dinero.");
         }
+    }
+
+    public long getNumero() {
+        return numero;
     }
 }

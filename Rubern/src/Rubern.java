@@ -1,8 +1,4 @@
-import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Matias on 11/10/2016.
@@ -23,34 +19,37 @@ public class Rubern {
 
 
 
-    public Rubern(double distanciaMinima){
-        choferes = new ArrayList<Chofer>();
-        clientes = new ArrayList<Cliente>();
-        costosDeImagen = new ArrayList<Tupla>();
+    public Rubern(double distanciaMinima, ArrayList<Chofer> choferes){
+        this.choferes = choferes;
+        clientes = new ArrayList<>();
+        costosDeImagen = new ArrayList<>();
         this.distanciaMinima = distanciaMinima;
 
     }
 
+    /**
+     * Por cada chofer disponible, y dentro de la distancia minima, se calcula el costo de imagen y se añade a un hashmap que
+     * contiene choferes con sus respectivos costos de imagen para despues ordenar dicho mapa respecto de los costos de imagen asi
+     * poder obtener el chofer cuyo costo sea menor.
+     */
     public void iniciarViaje(Solicitud solicitud){
-        // Por cada chofer disponible, y dentro de la distancia minima, se calcula el costo de imagen y se añade a un hashmap que
-        // contiene choferes con sus respectivos costos de imagen para despues ordenar dicho mapa respecto de los costos de imagen asi
-        // poder obtener el chofer cuyo costo sea menor.
+        int quantity = solicitud.getPasajeros();
+        while(quantity > 0)
+           quantity -= iniciar(solicitud);
+    }
+
+    private int iniciar(Solicitud solicitud){
+        Tupla aux;
+        Tupla current = null;
         for(Chofer c: choferes){
             if (c.estaDisponible(solicitud.getFecha()) && (c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()) <= distanciaMinima)){
-                calcularCantidadAutos(solicitud.getPasajeros(),c);
-                costosDeImagen.add(new Tupla (c,calcularCantidadAutos(solicitud.getPasajeros(),c)*((c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()))/250)));
+                aux = new Tupla (c,calcularCantidadAutos(solicitud.getPasajeros(),c)*((c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()))/250));
+                if(current == null || current.getCostoDeImagen() > aux.getCostoDeImagen())
+                    current = aux;
                 //Faltaria agregar la calidad del auto en el costo de imagen.
             }
         }
-        Collections.sort(costosDeImagen,new ComparadorDeCostos());
-        for (int i = 0; i< costosDeImagen.size(); i++){
-            Tupla minimo = costosDeImagen.get(i);
-            minimo.getChofer().enviarViaje(solicitud);
-            if (costosDeImagen.get(i).getChofer().isAceptaViaje()){
-                double comision = minimo.getChofer().costo*0.1;
-            }
-        }
-
+        return current.getChofer().getAuto().getCapacidadMax();
     }
 
     public int calcularCantidadAutos(int numPasajeros, Chofer chofer){

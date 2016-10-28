@@ -14,8 +14,8 @@ public class Chofer extends Persona{
     public double distancia = 0;
     public double costo = 0;
 
-    public Chofer(Auto auto, Interval jornada, String nombre, String telefono, String email, TarjetaCredito tarjeta){
-        super(nombre, telefono, email, tarjeta);
+    public Chofer(Auto auto, Interval jornada, String nombre, TarjetaCredito tarjeta){
+        super(nombre, 2112 + "", nombre + "@Rubern.com", tarjeta);
         this.auto = auto;
         this.jornada = jornada;
     }

@@ -12,8 +12,12 @@ public class Cliente extends Persona{
         viajando = estado;
     }
 
-    public Cliente(String nombre, String telefono, String email, TarjetaCredito tarjeta) {
-        super(nombre, telefono, email, tarjeta);
+    /**
+     * Cambiar los parametros
+     *
+     */
+    public Cliente(String nombre, TarjetaCredito tarjeta) {
+        super(nombre, 2020 + "", nombre + "@austra.edu.ar", tarjeta);
         viajando = false;
 
     }
