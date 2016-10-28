@@ -57,12 +57,38 @@ public class Main {
         r = new Rubern(100, list);
         int command = 1;
         while(command != 0){
-            System.out.println("1. Para agregar cliente\nOtra tecla. Para salir del programa");
+            System.out.println("1. Para agregar cliente\n2. Para buscar un cliente.\nOtra para salir del programa");
             command = Scanner.getInt("Ingrese un comando: ");
             switch(command){
                 case 1:
-                    
+                    /**
+                     * Agrego un cliente nuevo a la lista de clientes de rubern.
+                     */
+                    Cliente client = new Cliente(Scanner.getString("Ingrese nombre del cliente: "), new TarjetaCredito(Scanner.getLong("Ingrese numero de tarjeta: "), Scanner.getDouble("Ingrese un saldo: ")));
+                    r.getClientes().add(client);
                     break;
+
+                case 2:
+                    /**
+                     * Busco un cliente dentro de la lista de clientes por su nombre.
+                     */
+
+                    Cliente clientDeBusqueda;
+                    String result = "Y";
+                    while(result.equals ("Y")) {
+                        String cliente = Scanner.getString("Ingrese el nombre del cliente que busca: ");
+                        for (int i = 0; i < r.getClientes().size(); i++) {
+                            if (r.getClientes().get(i).getNombre().equals(cliente)) {
+                                clientDeBusqueda = r.getClientes().get(i);
+                                clientDeBusqueda.solicitarViaje(Scanner.getInt("Cantidad de pasajeros: "), new Point2D(Scanner.getDouble("Posicion inicial en X: "), Scanner.getDouble("Posicion inicial en Y: ")), new Point2D(Scanner.getDouble("Posicion final en X: "), Scanner.getDouble("Posicion final en Y: ")), Scanner.getDouble("Hora de viaje: "));
+                                result = "N";
+                            }
+
+                        }
+                        System.out.println("Cliente no encontrado, le gustaria buscar otro?");
+                        result = Scanner.getString("[Y/N]: ");
+                    }
+
                 default:
                     command = 0;
             }

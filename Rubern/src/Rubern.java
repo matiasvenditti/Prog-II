@@ -27,6 +27,10 @@ public class Rubern {
 
     }
 
+    public ArrayList<Cliente> getClientes() {
+        return clientes;
+    }
+
     /**
      * Por cada chofer disponible, y dentro de la distancia minima, se calcula el costo de imagen y se añade a un hashmap que
      * contiene choferes con sus respectivos costos de imagen para despues ordenar dicho mapa respecto de los costos de imagen asi

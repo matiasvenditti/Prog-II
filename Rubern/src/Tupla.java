@@ -18,5 +18,5 @@ public class Tupla {
     public Chofer getChofer() {
         return chofer;
     }
-    
+
 }
