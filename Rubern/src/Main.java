@@ -48,8 +48,6 @@ public class Main {
                     "Indigo",
                     "FBO703",
                     Scanner.getInt("Ingrese la capacidad maxima del auto: ")),
-                    new Interval(Scanner.getDouble("Ingrese un inicio: "),
-                    Scanner.getDouble("Ingrese un fin: ")),
                     Scanner.getString("Escribir el nombre del Chofer: "),
                     new TarjetaCredito(Scanner.getLong("Ingrese un numero de tarjeta: "),
                     Scanner.getInt("Ingrese una saldo: "))));
