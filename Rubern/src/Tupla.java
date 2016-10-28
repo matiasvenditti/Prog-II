@@ -18,8 +18,5 @@ public class Tupla {
     public Chofer getChofer() {
         return chofer;
     }
-
-    public void printAlgo(){
-        System.out.println("hola");
-    }
+    
 }
