@@ -8,7 +8,6 @@ public class Rubern {
     private ArrayList<Chofer> choferes;
     private ArrayList<Cliente> clientes;
     private double distanciaMinima;
-
     private ArrayList<Tupla> costosDeImagen;
 
     public static void main (String[] args){
@@ -46,7 +45,7 @@ public class Rubern {
         Tupla aux;
         Tupla current = null;
         for(Chofer c: choferes){
-            if (c.estaDisponible(solicitud.getFecha()) && (c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()) <= distanciaMinima)){
+            if (c.getEstado().isOnline() && (c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()) <= distanciaMinima)){
                 aux = new Tupla (c,calcularCantidadAutos(solicitud.getPasajeros(),c)*((c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()))/250));
                 if(current == null || current.getCostoDeImagen() > aux.getCostoDeImagen())
                     current = aux;

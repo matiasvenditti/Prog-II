@@ -7,31 +7,26 @@ import java.util.Random;
 public class Chofer extends Persona{
 
     private Auto auto;
-    private Interval jornada;
+    private Estado estado;
     private String name;
     private boolean disponible;
     private boolean aceptaViaje = false;
     public double distancia = 0;
     public double costo = 0;
 
-    public Chofer(Auto auto, Interval jornada, String nombre, TarjetaCredito tarjeta){
+    public Chofer(Auto auto, String nombre, TarjetaCredito tarjeta){
         super(nombre, 2112 + "", nombre + "@Rubern.com", tarjeta);
         this.auto = auto;
-        this.jornada = jornada;
+        estado = new Offline();
     }
 
-    public boolean estaDisponible(double hora){
-        if (jornada.containsHour(hora) && disponible ){
-            return true;
-        }
-        return false;
-    }
 
     public void enviarViaje(Solicitud solicitud){
         //Le asigno un 50% de chances de que el chofer acepte o no el viaje con un numero random.
         // si el cliente no puede pagar el viaje o el chofer lo rechaza, no se realiza el viaje.
         Random random = new Random();
         int number = random.nextInt(2);
+
 
         if (number == 0 && solicitud.getCliente().getTarjetaCredito().getSaldo() > costo){
             System.out.println("El chofer acepto el viaje: " + solicitud.toString());
@@ -46,12 +41,20 @@ public class Chofer extends Persona{
 
     }
 
+    public void cambiarEstado(Estado estado){
+        this.estado = estado;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
     public void viajar(Solicitud solicitud){
         //acepta el viaje, no esta mas disponible, se actualizan las coordenadas del auto, y se cobra al cliente.
         double distancia = Math.sqrt(Math.pow(solicitud.getFin().getxPosition()-solicitud.getInicio().getxPosition(),2)+(Math.pow(solicitud.getFin().getyPosition()-solicitud.getInicio().getyPosition(),2)));
         costo = 15 + (distancia/100);
         aceptaViaje = true;
-        disponible = false;
+        cambiarEstado(new Working());
         this.getAuto().actualizarCoordenadas(solicitud.getFin());
         solicitud.getCliente().pagarViaje(costo,solicitud,this);
         solicitud.getCliente().setViajando(true);
@@ -66,10 +69,10 @@ public class Chofer extends Persona{
     }
 
     public void finalizarViaje(){
-        if (!disponible){
-            disponible = true;
+        if (estado.isWorking()){
+            cambiarEstado(new Online());
             aceptaViaje = false;
         }
-        throw new RuntimeException("El chofer no se encuetra en ningun viaje.");
+        throw new RuntimeException("El chofer no se encuentra en ningun viaje.");
     }
 }
