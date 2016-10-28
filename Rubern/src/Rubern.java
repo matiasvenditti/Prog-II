@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Matias on 11/10/2016.
@@ -31,37 +32,31 @@ public class Rubern {
     }
 
     /**
-     * Por cada chofer disponible, y dentro de la distancia minima, se calcula el costo de imagen y se añade a un hashmap que
-     * contiene choferes con sus respectivos costos de imagen para despues ordenar dicho mapa respecto de los costos de imagen asi
+     * Por cada chofer disponible, y dentro de la distancia minima, se calcula el costo de imagen y se añade a una lista de tuplas que
+     * contiene choferes con sus respectivos costos de imagen para despues ordenar dicha lista respecto de los costos de imagen asi
      * poder obtener el chofer cuyo costo sea menor.
      */
-    public void iniciarViaje(Solicitud solicitud){
-        int quantity = solicitud.getPasajeros();
-        while(quantity > 0)
-           quantity -= iniciar(solicitud);
-    }
 
-    private int iniciar(Solicitud solicitud){
-        Tupla aux;
-        Tupla current = null;
-        for(Chofer c: choferes){
-            if (c.getEstado().isOnline() && (c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()) <= distanciaMinima)){
-                aux = new Tupla (c,calcularCantidadAutos(solicitud.getPasajeros(),c)*((c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()))/250));
-                if(current == null || current.getCostoDeImagen() > aux.getCostoDeImagen())
-                    current = aux;
-                //Faltaria agregar la calidad del auto en el costo de imagen.
+    public void iniciarViaje(Solicitud solicitud){
+        for (Chofer c: choferes){
+            if (c.getEstado().isOnline() && (c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()) <= distanciaMinima && solicitud.getPasajeros() <= c.getAuto().getCapacidadMax())){
+                costosDeImagen.add(new Tupla(c,(c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()))/250));
             }
         }
-        return current.getChofer().getAuto().getCapacidadMax();
+        Collections.sort(costosDeImagen, new ComparadorDeCostos());
+        Chofer minimo = Collections.min(costosDeImagen, new ComparadorDeCostos()).getChofer();
+        minimo.enviarViaje(solicitud);
+        for (int i = 0; i < costosDeImagen.size(); i++){
+                costosDeImagen.get(i).getChofer().enviarViaje(solicitud);
+                if (costosDeImagen.get(i).getChofer().isAceptaViaje()){
+                    break;
+            }
+        }
+
+
+
     }
 
-    public int calcularCantidadAutos(int numPasajeros, Chofer chofer){
-        //Calcula cuantos autos van a ser necesarios para transportar un dado numero de pasajeros dada la capacidad del auto.
 
-        int capacidad = chofer.getAuto().getCapacidadMax();
-        int cantidadDeAutos = ((numPasajeros % capacidad) != 0) ? (int)(numPasajeros/capacidad) + 1 : (int)(numPasajeros/capacidad);
-        return cantidadDeAutos;
-
-    }
 
 }

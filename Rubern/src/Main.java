@@ -43,11 +43,8 @@ public class Main {
         ArrayList<Chofer> list = new ArrayList<>();
         int quantity = Scanner.getInt("Escribir la cantidad de Choferes: ");
         for (int i = 0; i < quantity; i++) {
-            list.add(new Chofer(new Auto("VolksWagen",
-                    "Ka",
-                    "Indigo",
-                    "FBO703",
-                    Scanner.getInt("Ingrese la capacidad maxima del auto: ")),
+            list.add(new Chofer(new Auto(
+                    Scanner.getInt("Ingrese la capacidad maxima del auto: "),new Point2D(Scanner.getDouble("Posicion en X del auto: "),Scanner.getDouble("Posicion en Y del auto: "))),
                     Scanner.getString("Escribir el nombre del Chofer: "),
                     new TarjetaCredito(Scanner.getLong("Ingrese un numero de tarjeta: "),
                     Scanner.getInt("Ingrese una saldo: "))));

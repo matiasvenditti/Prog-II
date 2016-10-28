@@ -5,7 +5,6 @@
 public class Cliente extends Persona{
 
 
-    private Point2D coordenadasCliente;
     private boolean viajando;
 
     public void setViajando(boolean estado) {
