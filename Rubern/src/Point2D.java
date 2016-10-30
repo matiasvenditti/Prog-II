@@ -43,4 +43,9 @@ public class Point2D {
         }
         return false;
     }
+
+    public String toString(){
+        return "X: " + xPosition + "\nY: " + yPosition;
+    }
+
 }

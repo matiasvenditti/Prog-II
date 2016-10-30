@@ -16,4 +16,9 @@ public class Working implements Estado {
     public boolean isWorking() {
         return true;
     }
+
+    @Override
+    public String toString(){
+        return "Working.";
+    }
 }

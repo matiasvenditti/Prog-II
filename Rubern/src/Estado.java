@@ -8,4 +8,6 @@ public interface Estado {
     boolean isOffline();
 
     boolean isWorking();
+
+    String toString();
 }

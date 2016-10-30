@@ -18,4 +18,9 @@ public class Online implements Estado {
     public boolean isWorking() {
         return false;
     }
+
+    @Override
+    public String toString(){
+        return "Online.";
+    }
 }

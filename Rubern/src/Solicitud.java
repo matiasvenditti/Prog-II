@@ -44,7 +44,7 @@ public class Solicitud {
     }
 
     public String toString(){
-        String result = "Inicio: " + inicio +"\nDestino: " + fin + "\nCantidad de pasajeros: " + pasajeros + "\nFecha: " + hora;
+        String result = "Desde: \n" + inicio.toString() +"\nHasta: \n" + fin.toString() + "\nCantidad de pasajeros: " + pasajeros + "\nHora: " + hora;
         return result;
     }
 }

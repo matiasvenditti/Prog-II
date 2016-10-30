@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
+
 /**
  * Created by Matias on 11/10/2016.
  */
@@ -31,6 +32,10 @@ public class Rubern {
         return clientes;
     }
 
+    public ArrayList<Chofer> getChoferes() {
+        return choferes;
+    }
+
     /**
      * Por cada chofer disponible, y dentro de la distancia minima, se calcula el costo de imagen y se añade a una lista de tuplas que
      * contiene choferes con sus respectivos costos de imagen para despues ordenar dicha lista respecto de los costos de imagen asi
@@ -44,19 +49,16 @@ public class Rubern {
             }
         }
         Collections.sort(costosDeImagen, new ComparadorDeCostos());
-        Chofer minimo = Collections.min(costosDeImagen, new ComparadorDeCostos()).getChofer();
-        minimo.enviarViaje(solicitud);
         for (int i = 0; i < costosDeImagen.size(); i++){
                 costosDeImagen.get(i).getChofer().enviarViaje(solicitud);
-                if (costosDeImagen.get(i).getChofer().isAceptaViaje()){
+                if (costosDeImagen.get(i).getChofer().isAceptaViaje()) {
                     break;
-            }
+                }
         }
-
-
-
     }
 
 
 
+
 }
+

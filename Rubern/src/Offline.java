@@ -16,4 +16,8 @@ public class Offline implements Estado {
     public boolean isWorking() {
         return false;
     }
+    @Override
+    public String toString(){
+        return "Offline.";
+    }
 }

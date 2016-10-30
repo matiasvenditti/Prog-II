@@ -21,9 +21,9 @@ public class Cliente extends Persona{
 
     }
 
-    public void solicitarViaje(int pasajeros,Point2D coordenadasInicio, Point2D coordenadasDestino, double hora) {
+    public Solicitud solicitarViaje(int pasajeros,Point2D coordenadasInicio, Point2D coordenadasDestino, double hora) {
         if (!coordenadasDestino.equals(coordenadasInicio)) {
-            Solicitud solicitudDeViaje = new Solicitud(pasajeros,coordenadasInicio, coordenadasDestino, hora, this);
+            return new Solicitud(pasajeros,coordenadasInicio, coordenadasDestino, hora, this);
         } else {
             throw new RuntimeException("El cliente ya se encuentra en el destino.");
         }
@@ -33,5 +33,10 @@ public class Cliente extends Persona{
 
         getTarjetaCredito().disminuir(costo);
         chofer.getTarjetaCredito().cargarSaldo(costo - 0.1*costo);
+    }
+
+    public String getStatus(){
+        String estado = viajando? "Viajando." : "Viaje terminado.";
+        return "Nombre: " + this.getNombre() + "\nNumero de Tarjeta: " + this.getTarjetaCredito().getNumero() + "\nSaldo: " + this.getTarjetaCredito().getSaldo() + "\nEstado: " + estado;
     }
 }
