@@ -39,4 +39,8 @@ public class Cliente extends Persona{
         String estado = viajando? "Viajando." : "No se encuentra viajando.";
         return "Nombre: " + this.getNombre() + "\nNumero de Tarjeta: " + this.getTarjetaCredito().getNumero() + "\nSaldo: " + this.getTarjetaCredito().getSaldo() + "\nEstado: " + estado;
     }
+
+    public boolean isViajando() {
+        return viajando;
+    }
 }

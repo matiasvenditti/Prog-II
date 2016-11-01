@@ -54,7 +54,7 @@ public class Main {
         r = new Rubern(100, list);
         int command = 1;
         while (command != 0) {
-            System.out.println("1. Para agregar cliente\n2. Para crear una solicitud de viaje.\n3. Para obtener datos de algun cliente.\n4. Para obtener datos de algun chofer.\n5. Para obtener datos de la agencia.\nOtra para salir del programa");
+            System.out.println("1. Para agregar cliente\n2. Para crear una solicitud de viaje.\n3. Para obtener datos de algun cliente.\n4. Para finalizar un viaje y obtener datos de algun chofer.\n5. Para obtener datos de la agencia.\nOtra para salir del programa");
             command = Scanner.getInt("Ingrese un comando: ");
             switch (command) {
                 case 1:
@@ -72,13 +72,14 @@ public class Main {
                      * Busco un cliente para iniciar un viaje.
                      */
                     System.out.println("----------------SOLICITANDO UN VIAJE----------------");
-                    int size2 = r.getClientes().size();
-                    String[] clientes2 = new String[size2];
-                    for (int i = 0; i<r.getClientes().size(); i++){
-                        clientes2[i] = r.getClientes().get(i).getNombre();
+                    ArrayList<String> nombresClientes = new ArrayList<>();
+                    for(Cliente client2: r.getClientes()){
+                        if (!client2.isViajando()){
+                            nombresClientes.add(client2.getNombre());
+                        }
                     }
-                    System.out.println("Clientes encontrados en la lista de Rubern: ");
-                    System.out.println(java.util.Arrays.toString(clientes2));
+                    System.out.println("Clientes que actualmente no estan en un viaje encontrados en la lista de Rubern : ");
+                    System.out.println(nombresClientes);
 
                     Cliente clientDeBusqueda = null;
                     String result = "Y";
@@ -148,13 +149,14 @@ public class Main {
                      * Busca un chofer para finalizar el viaje si es que esta viajando, y ademas da su estado.
                      */
                     System.out.println("----------------OBTENIENDO DATOS DE CHOFER----------------");
-                    int size4 = r.getChoferes().size();
-                    String[] choferes4 = new String[size4];
-                    for (int i = 0; i<r.getChoferes().size(); i++){
-                        choferes4[i] = r.getChoferes().get(i).getNombre();
+                    ArrayList<String> nombresChoferes = new ArrayList<>();
+                    for (Chofer chofer4 : r.getChoferes()){
+                        if (chofer4.getEstado().isWorking()){
+                            nombresChoferes.add(chofer4.getNombre());
+                        }
                     }
-                    System.out.println("Choferes encontrados en la lista de Rubern: ");
-                    System.out.println(java.util.Arrays.toString(choferes4));
+                    System.out.println("Choferes que actualmente se encuentran viajando en la lista de Rubern: ");
+                    System.out.println(nombresChoferes);
 
                     Chofer choferDeBusqueda = null;
                     String otroResultado1 = "Y";
@@ -163,7 +165,7 @@ public class Main {
                         for (int i = 0; i < r.getChoferes().size(); i++) {
                             if (r.getChoferes().get(i).getNombre().equals(chofer)) {
                                 choferDeBusqueda = r.getChoferes().get(i);
-                                choferDeBusqueda.finalizarViaje();
+                                choferDeBusqueda.finalizarViaje(choferDeBusqueda.getSolicitudActual());
                                 System.out.println(choferDeBusqueda.getStatus());
                                 otroResultado1 = "N";
                             }

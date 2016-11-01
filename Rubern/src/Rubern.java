@@ -81,19 +81,17 @@ public class Rubern {
     }
 
     public String getStatus(){
-        int size = this.getChoferes().size();
-        String[] nombresChoferes = new String[size];
-        for (int i = 0; i<this.getChoferes().size(); i++){
-            nombresChoferes[i] = this.getChoferes().get(i).getNombre();
+        ArrayList<String> nombresChoferes = new ArrayList<>();
+        for (Chofer chofer: choferes){
+            nombresChoferes.add(chofer.getNombre());
         }
 
-        int size2 = this.getChoferes().size();
-        String[] nombresClientes = new String[size2];
-        for (int i = 0; i<this.getClientes().size(); i++){
-            nombresClientes[i] = this.getClientes().get(i).getNombre();
+        ArrayList<String> nombresClientes = new ArrayList<>();
+        for(Cliente client: clientes){
+            nombresClientes.add(client.getNombre());
         }
 
-        return "Agencia Rubern\nChoferes: " + java.util.Arrays.toString(nombresChoferes) + "\nClientes: " + java.util.Arrays.toString(nombresClientes) + "\nDistancia minima : " + this.distanciaMinima + "\nGanancias: " + this.ganancias;
+        return "Agencia Rubern\nChoferes: " + nombresChoferes + "\nClientes: " + nombresClientes + "\nDistancia minima : " + this.distanciaMinima + "\nGanancias: " + this.ganancias;
     }
 
 

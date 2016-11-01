@@ -9,12 +9,14 @@ public class Chofer extends Persona{
     private Auto auto;
     private Estado estado;
     private boolean aceptaViaje;
+    private Solicitud solicitudActual;
 
     public Chofer(String nombre, TarjetaCredito tarjeta, Auto auto){
         super(nombre, 2112 + "", nombre + "@Rubern.com", tarjeta);
         this.auto = auto;
         estado = new Offline();
         aceptaViaje = false;
+        solicitudActual = null;
     }
 
 
@@ -29,6 +31,7 @@ public class Chofer extends Persona{
 
         if (number == 0 && solicitud.getCliente().getTarjetaCredito().getSaldo() >= solicitud.getCosto()){
             viajar(solicitud);
+            solicitudActual = solicitud;
             System.out.println("El chofer "+ this.getNombre() + " acepto el viaje: \n" + solicitud.toString());
             System.out.println("Con una distancia de: " + solicitud.getDistancia() + " Y con un costo de: " + solicitud.getCosto());
         }
@@ -46,18 +49,24 @@ public class Chofer extends Persona{
 
         aceptaViaje = true;
         cambiarEstado(new Working());
-        this.getAuto().actualizarCoordenadas(solicitud.getFin());
-        solicitud.getCliente().pagarViaje(solicitud,this);
         solicitud.getCliente().setViajando(true);
     }
 
-    public void finalizarViaje(){
+    public void finalizarViaje(Solicitud solicitud){
         if (!this.getEstado().isWorking()){
             throw new RuntimeException("El chofer no se encuentra en ningun viaje.");
         }
         cambiarEstado(new Online());
         aceptaViaje = false;
+        solicitud.getCliente().setViajando(false);
+        this.getAuto().actualizarCoordenadas(solicitud.getFin());
+        solicitud.getCliente().pagarViaje(solicitud,this);
+        System.out.println("Rubern tuvo una ganancia de: " + solicitud.getCosto()*0.1);
 
+    }
+
+    public Solicitud getSolicitudActual() {
+        return solicitudActual;
     }
 
     public Auto getAuto() {
