@@ -45,7 +45,7 @@ public class Main {
         ArrayList<Chofer> list = new ArrayList<>();
         int quantity = Scanner.getInt("Escribir la cantidad de Choferes: ");
         for (int i = 0; i < quantity; i++) {
-            System.out.println("----------------AGREGANDO CHOFER NUMERO " + i + 1 + " DE " + quantity + "----------------");
+            System.out.println("----------------AGREGANDO CHOFER NUMERO " + (i+1) + " DE " + quantity + "----------------");
             Chofer chofer = new Chofer( Scanner.getString("Escribir el nombre del Chofer: "),new TarjetaCredito(Scanner.getLong("Ingrese un numero de tarjeta: "), Scanner.getInt("Ingrese una saldo: ")), new Auto(Scanner.getInt("Ingrese la capacidad maxima del auto: "), new Point2D(Scanner.getDouble("Posicion en X del auto: "), Scanner.getDouble("Posicion en Y del auto: "))));
             chofer.cambiarEstado(new Online());
             list.add(chofer);
@@ -54,7 +54,7 @@ public class Main {
         r = new Rubern(100, list);
         int command = 1;
         while (command != 0) {
-            System.out.println("1. Para agregar cliente\n2. Para crear una solicitud de viaje.\n3. Para obtener datos de algun cliente.\n4. Para finalizar el viaje de algun chofer.\nOtra para salir del programa");
+            System.out.println("1. Para agregar cliente\n2. Para crear una solicitud de viaje.\n3. Para obtener datos de algun cliente.\n4. Para obtener datos de algun chofer.\n5. Para obtener datos de la agencia.\nOtra para salir del programa");
             command = Scanner.getInt("Ingrese un comando: ");
             switch (command) {
                 case 1:
@@ -72,6 +72,14 @@ public class Main {
                      * Busco un cliente para iniciar un viaje.
                      */
                     System.out.println("----------------SOLICITANDO UN VIAJE----------------");
+                    int size2 = r.getClientes().size();
+                    String[] clientes2 = new String[size2];
+                    for (int i = 0; i<r.getClientes().size(); i++){
+                        clientes2[i] = r.getClientes().get(i).getNombre();
+                    }
+                    System.out.println("Clientes encontrados en la lista de Rubern: ");
+                    System.out.println(java.util.Arrays.toString(clientes2));
+
                     Cliente clientDeBusqueda = null;
                     String result = "Y";
                     while (result.equals("Y")) {
@@ -104,6 +112,14 @@ public class Main {
                      * Busco un cliente para obtener sus datos.
                      */
                     System.out.println("----------------OBTENENIENDO DATOS DE CLIENTE----------------");
+                    int size3 = r.getClientes().size();
+                    String[] clientes3 = new String[size3];
+                    for (int i = 0; i<r.getClientes().size(); i++){
+                        clientes3[i] = r.getClientes().get(i).getNombre();
+                    }
+                    System.out.println("Clientes encontrados en la lista de Rubern: ");
+                    System.out.println(java.util.Arrays.toString(clientes3));
+
                     Cliente Otrocliente = null;
                     String Otroresultado = "Y";
                     while (Otroresultado.equals("Y")) {
@@ -131,30 +147,45 @@ public class Main {
                     /**
                      * Busca un chofer para finalizar el viaje si es que esta viajando, y ademas da su estado.
                      */
-                    System.out.println("----------------BUSCANDO CHOFER PARA FINALZAR VIAJE----------------");
+                    System.out.println("----------------OBTENIENDO DATOS DE CHOFER----------------");
+                    int size4 = r.getChoferes().size();
+                    String[] choferes4 = new String[size4];
+                    for (int i = 0; i<r.getChoferes().size(); i++){
+                        choferes4[i] = r.getChoferes().get(i).getNombre();
+                    }
+                    System.out.println("Choferes encontrados en la lista de Rubern: ");
+                    System.out.println(java.util.Arrays.toString(choferes4));
+
                     Chofer choferDeBusqueda = null;
-                    String Otroresultado1 = "Y";
-                    while (Otroresultado1.equals("Y")) {
+                    String otroResultado1 = "Y";
+                    while (otroResultado1.equals("Y")) {
                         String chofer = Scanner.getString("Ingrese el nombre del chofer que busca: ");
                         for (int i = 0; i < r.getChoferes().size(); i++) {
                             if (r.getChoferes().get(i).getNombre().equals(chofer)) {
                                 choferDeBusqueda = r.getChoferes().get(i);
-                                //choferDeBusqueda.finalizarViaje();
+                                choferDeBusqueda.finalizarViaje();
                                 System.out.println(choferDeBusqueda.getStatus());
-                                Otroresultado1 = "N";
+                                otroResultado1 = "N";
                             }
 
 
                         }
                         if (choferDeBusqueda == null){
                             System.out.println("Chofer no encontrado, le gustaria buscar otro?");
-                            Otroresultado = Scanner.getString("[Y/N]: ");
+                            otroResultado1 = Scanner.getString("[Y/N]: ");
                         }
                         else{
                             System.out.println("--------------------------------");
                         }
-                        break;
                     }
+                    break;
+
+                case 5:
+                    System.out.println("----------------ESTADO DE LA AGENCIA----------------");
+                    System.out.println(r.getStatus());
+                    System.out.println("--------------------------------");
+                    break;
+
 
 
                 default:
@@ -162,5 +193,8 @@ public class Main {
             }
 
         }
+
     }
+
+
 }

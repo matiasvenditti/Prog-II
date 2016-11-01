@@ -10,6 +10,7 @@ public class Rubern {
     private ArrayList<Chofer> choferes;
     private ArrayList<Cliente> clientes;
     private double distanciaMinima;
+    private double ganancias;
     private ArrayList<Tupla> costosDeImagen;
 
     public static void main (String[] args){
@@ -25,6 +26,7 @@ public class Rubern {
         clientes = new ArrayList<>();
         costosDeImagen = new ArrayList<>();
         this.distanciaMinima = distanciaMinima;
+        ganancias = 0;
 
     }
 
@@ -46,15 +48,52 @@ public class Rubern {
         for (Chofer c: choferes){
             if (c.getEstado().isOnline() && (c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()) <= distanciaMinima && solicitud.getPasajeros() <= c.getAuto().getCapacidadMax())){
                 costosDeImagen.add(new Tupla(c,(c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()))/250));
+
+            }
+            else if (c.getEstado().isOnline() && solicitud.getPasajeros() <= c.getAuto().getCapacidadMax()){
+                System.out.println("El chofer " + c.getNombre() + " no puede realizar el viaje ya que se encuentra fuera del rango minimo.");
+            }
+            else if (c.getEstado().isOnline() && (c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()) <= distanciaMinima)){
+                System.out.println("El chofer " + c.getNombre() + " no puede realizar el viaje porque el numero de pasajeros excede la capacidad del auto.");
+            }
+            else{
+                System.out.println("El chofer " + c.getNombre() + " no puede realizar el viaje dado que no se encuentra en linea.");
             }
         }
-        Collections.sort(costosDeImagen, new ComparadorDeCostos());
-        for (int i = 0; i < costosDeImagen.size(); i++){
+        if (!costosDeImagen.isEmpty()){
+            Collections.sort(costosDeImagen, new ComparadorDeCostos());
+            for (int i = 0; i < costosDeImagen.size(); i++){
                 costosDeImagen.get(i).getChofer().enviarViaje(solicitud);
                 if (costosDeImagen.get(i).getChofer().isAceptaViaje()) {
+                    this.añadirGanancias(solicitud.getCosto()*0.1);
                     break;
                 }
+            }
         }
+        else{
+            System.out.println("El viaje fue rechazado.");
+        }
+
+    }
+
+    public void añadirGanancias(double ganancias){
+        this.ganancias += ganancias;
+    }
+
+    public String getStatus(){
+        int size = this.getChoferes().size();
+        String[] nombresChoferes = new String[size];
+        for (int i = 0; i<this.getChoferes().size(); i++){
+            nombresChoferes[i] = this.getChoferes().get(i).getNombre();
+        }
+
+        int size2 = this.getChoferes().size();
+        String[] nombresClientes = new String[size2];
+        for (int i = 0; i<this.getClientes().size(); i++){
+            nombresClientes[i] = this.getClientes().get(i).getNombre();
+        }
+
+        return "Agencia Rubern\nChoferes: " + java.util.Arrays.toString(nombresChoferes) + "\nClientes: " + java.util.Arrays.toString(nombresClientes) + "\nDistancia minima : " + this.distanciaMinima + "\nGanancias: " + this.ganancias;
     }
 
 

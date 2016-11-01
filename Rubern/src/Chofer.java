@@ -8,14 +8,13 @@ public class Chofer extends Persona{
 
     private Auto auto;
     private Estado estado;
-    private boolean aceptaViaje = false;
-    public double distancia;
-    public double costo;
+    private boolean aceptaViaje;
 
     public Chofer(String nombre, TarjetaCredito tarjeta, Auto auto){
         super(nombre, 2112 + "", nombre + "@Rubern.com", tarjeta);
         this.auto = auto;
         estado = new Offline();
+        aceptaViaje = false;
     }
 
 
@@ -28,10 +27,10 @@ public class Chofer extends Persona{
         int number = random.nextInt(2);
 
 
-        if (number == 0 && solicitud.getCliente().getTarjetaCredito().getSaldo() >= costo){
+        if (number == 0 && solicitud.getCliente().getTarjetaCredito().getSaldo() >= solicitud.getCosto()){
             viajar(solicitud);
             System.out.println("El chofer "+ this.getNombre() + " acepto el viaje: \n" + solicitud.toString());
-            System.out.println("Con una distancia de: " + distancia + " Y con un costo de: " + costo);
+            System.out.println("Con una distancia de: " + solicitud.getDistancia() + " Y con un costo de: " + solicitud.getCosto());
         }
         else{
             System.out.println("El chofer "+ this.getNombre()+ " no acepto el viaje: \n" + solicitud.toString());
@@ -44,21 +43,21 @@ public class Chofer extends Persona{
         /**
          * acepta el viaje, no esta mas disponible, se actualizan las coordenadas del auto, y se cobra al cliente.
          */
-        distancia = Math.sqrt(Math.pow(solicitud.getFin().getxPosition()-solicitud.getInicio().getxPosition(),2)+(Math.pow(solicitud.getFin().getyPosition()-solicitud.getInicio().getyPosition(),2)));
-        costo = 15 + (distancia/100);
+
         aceptaViaje = true;
         cambiarEstado(new Working());
         this.getAuto().actualizarCoordenadas(solicitud.getFin());
-        solicitud.getCliente().pagarViaje(costo,solicitud,this);
+        solicitud.getCliente().pagarViaje(solicitud,this);
         solicitud.getCliente().setViajando(true);
     }
 
     public void finalizarViaje(){
-        if (estado.isWorking()){
-            cambiarEstado(new Online());
-            aceptaViaje = false;
+        if (!this.getEstado().isWorking()){
+            throw new RuntimeException("El chofer no se encuentra en ningun viaje.");
         }
-        throw new RuntimeException("El chofer no se encuentra en ningun viaje.");
+        cambiarEstado(new Online());
+        aceptaViaje = false;
+
     }
 
     public Auto getAuto() {
@@ -80,4 +79,5 @@ public class Chofer extends Persona{
     public boolean isAceptaViaje() {
         return aceptaViaje;
     }
+
 }

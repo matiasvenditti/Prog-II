@@ -29,14 +29,14 @@ public class Cliente extends Persona{
         }
     }
 
-    public void pagarViaje(double costo, Solicitud viaje, Chofer chofer){
+    public void pagarViaje(Solicitud viaje, Chofer chofer){
 
-        getTarjetaCredito().disminuir(costo);
-        chofer.getTarjetaCredito().cargarSaldo(costo - 0.1*costo);
+        getTarjetaCredito().disminuir(viaje.getCosto());
+        chofer.getTarjetaCredito().cargarSaldo(viaje.getCosto()- 0.1*viaje.getCosto());
     }
 
     public String getStatus(){
-        String estado = viajando? "Viajando." : "Viaje terminado.";
+        String estado = viajando? "Viajando." : "No se encuentra viajando.";
         return "Nombre: " + this.getNombre() + "\nNumero de Tarjeta: " + this.getTarjetaCredito().getNumero() + "\nSaldo: " + this.getTarjetaCredito().getSaldo() + "\nEstado: " + estado;
     }
 }
