@@ -54,7 +54,7 @@ public class Main {
         r = new Rubern(100, list);
         int command = 1;
         while (command != 0) {
-            System.out.println("1. Para agregar cliente\n2. Para crear una solicitud de viaje.\n3. Para obtener datos de algun cliente.\n4. Para finalizar un viaje y obtener datos de algun chofer.\n5. Para obtener datos de la agencia.\nOtra para salir del programa");
+            System.out.println("1. Para agregar cliente\n2. Para crear una solicitud de viaje.\n3. Para obtener datos de algun cliente.\n4. Para opciones de Choferes.\n5. Para obtener datos de la agencia.\nOtra para salir del programa");
             command = Scanner.getInt("Ingrese un comando: ");
             switch (command) {
                 case 1:
@@ -148,36 +148,76 @@ public class Main {
                     /**
                      * Busca un chofer para finalizar el viaje si es que esta viajando, y ademas da su estado.
                      */
-                    System.out.println("----------------OBTENIENDO DATOS DE CHOFER----------------");
-                    ArrayList<String> nombresChoferes = new ArrayList<>();
-                    for (Chofer chofer4 : r.getChoferes()){
-                        if (chofer4.getEstado().isWorking()){
-                            nombresChoferes.add(chofer4.getNombre());
-                        }
-                    }
-                    System.out.println("Choferes que actualmente se encuentran viajando en la lista de Rubern: ");
-                    System.out.println(nombresChoferes);
 
-                    Chofer choferDeBusqueda = null;
-                    String otroResultado1 = "Y";
-                    while (otroResultado1.equals("Y")) {
-                        String chofer = Scanner.getString("Ingrese el nombre del chofer que busca: ");
-                        for (int i = 0; i < r.getChoferes().size(); i++) {
-                            if (r.getChoferes().get(i).getNombre().equals(chofer)) {
-                                choferDeBusqueda = r.getChoferes().get(i);
-                                choferDeBusqueda.finalizarViaje(choferDeBusqueda.getSolicitudActual());
-                                System.out.println(choferDeBusqueda.getStatus());
-                                otroResultado1 = "N";
-                            }
+                    int comando = 1;
+                    while(comando != 0) {
+                        System.out.println("1. Para obtener los datos de algun Chofer\n2. Para finalizar el viaje de algun Chofer\nOtro comando para volver al menu principal.");
+                        comando = Scanner.getInt("Ingrese un comando: ");
+                        switch (comando) {
+                            case 1:
+                                System.out.println("----------------OBTENIENDO DATOS DE CHOFER----------------");
+                                ArrayList<String> nombresChoferes1 = new ArrayList<>();
+                                for (Chofer c : r.getChoferes()) {
+                                    nombresChoferes1.add(c.getNombre());
+                                }
+                                System.out.println("Choferes en la lista de Rubern: " + nombresChoferes1);
+                                Chofer choferDeBusqueda = null;
+                                String otroResultado1 = "Y";
+                                while (otroResultado1.equals("Y")) {
+                                    String chofer = Scanner.getString("Ingrese el nombre del chofer que busca: ");
+                                    for (int i = 0; i < r.getChoferes().size(); i++) {
+                                        if (r.getChoferes().get(i).getNombre().equals(chofer)) {
+                                            choferDeBusqueda = r.getChoferes().get(i);
+                                            System.out.println(choferDeBusqueda.getStatus());
+                                            otroResultado1 = "N";
+                                        }
 
 
-                        }
-                        if (choferDeBusqueda == null){
-                            System.out.println("Chofer no encontrado, le gustaria buscar otro?");
-                            otroResultado1 = Scanner.getString("[Y/N]: ");
-                        }
-                        else{
-                            System.out.println("--------------------------------");
+                                    }
+                                    if (choferDeBusqueda == null) {
+                                        System.out.println("Chofer no encontrado, le gustaria buscar otro?");
+                                        otroResultado1 = Scanner.getString("[Y/N]: ");
+                                    } else {
+                                        System.out.println("--------------------------------");
+                                    }
+                                }
+                                break;
+                            case 2:
+                                System.out.println("----------------FINALIZANDO VIAJE DE ALGUN CHOFER----------------");
+                                ArrayList<String> nombresChoferes = new ArrayList<>();
+                                for (Chofer chofer4 : r.getChoferes()) {
+                                    if (chofer4.getEstado().isWorking()) {
+                                        nombresChoferes.add(chofer4.getNombre());
+                                    }
+                                }
+                                System.out.println("Choferes que actualmente se encuentran viajando en la lista de Rubern: ");
+                                System.out.println(nombresChoferes);
+                                Chofer choferDeBusqueda2 = null;
+                                String otroResultado2 = "Y";
+                                while (otroResultado2.equals("Y")) {
+                                    String chofer = Scanner.getString("Ingrese el nombre del chofer que busca: ");
+                                    for (int i = 0; i < r.getChoferes().size(); i++) {
+                                        if (r.getChoferes().get(i).getNombre().equals(chofer)) {
+                                            choferDeBusqueda2 = r.getChoferes().get(i);
+                                            choferDeBusqueda2.finalizarViaje(choferDeBusqueda2.getSolicitudActual());
+                                            otroResultado2 = "N";
+                                        }
+
+
+                                    }
+                                    if (choferDeBusqueda2 == null) {
+                                        System.out.println("Chofer no encontrado, le gustaria buscar otro?");
+                                        otroResultado2 = Scanner.getString("[Y/N]: ");
+                                    } else {
+                                        System.out.println("--------------------------------");
+                                    }
+
+                                }
+                                break;
+
+                            default:
+                                comando = 0;
+
                         }
                     }
                     break;

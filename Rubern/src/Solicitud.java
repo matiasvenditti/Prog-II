@@ -21,7 +21,7 @@ public class Solicitud {
         int identificador= (int) (Math.random()*1000000);
         this.cliente = cliente;
         distancia = Math.sqrt(Math.pow(fin.getxPosition()- inicio.getxPosition(),2)+(Math.pow(fin.getyPosition() - inicio.getyPosition(),2)));
-        costo = distancia/100;
+        costo = 15 + (distancia/100);
 
     }
 
