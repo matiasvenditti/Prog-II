@@ -159,10 +159,17 @@ public class Main {
                     int comando = 1;
                     while(comando != 0) {
                         System.out.println("----------------EN MENU CHOFERES----------------");
-                        System.out.println("1. Para obtener los datos de algun Chofer\n2. Para finalizar el viaje de algun Chofer\nOtro comando para volver al menu principal.");
+                        System.out.println("1. Para agregar un chofer\n2. Para obtener los datos de algun Chofer\n3. Para finalizar el viaje de algun Chofer\nOtro comando para volver al menu principal.");
                         comando = Scanner.getInt("Ingrese un comando: ");
                         switch (comando) {
                             case 1:
+                                System.out.println("----------------AGREGANDO CHOFER----------------");
+                                Chofer driver = new Chofer( Scanner.getString("Escribir el nombre del Chofer: "),new TarjetaCredito(Scanner.getLong("Ingrese un numero de tarjeta: "), Scanner.getInt("Ingrese una saldo: ")), new Auto(Scanner.getInt("Ingrese la capacidad maxima del auto: "), new Point2D(Scanner.getDouble("Posicion en X del auto: "), Scanner.getDouble("Posicion en Y del auto: ")), new CategoriaAuto(Scanner.getString("Categoria del auto: "), Scanner.getDouble("Porcentaje adicional: "))));
+                                driver.cambiarEstado(new Online());
+                                r.getChoferes().add(driver);
+                                break;
+
+                            case 2:
                                 System.out.println("----------------OBTENIENDO DATOS DE CHOFER----------------");
                                 ArrayList<String> nombresChoferes1 = new ArrayList<>();
                                 for (Chofer c : r.getChoferes()) {
@@ -188,7 +195,7 @@ public class Main {
                                     }
                                 }
                                 break;
-                            case 2:
+                            case 3:
                                 System.out.println("----------------FINALIZANDO VIAJE DE ALGUN CHOFER----------------");
                                 ArrayList<String> nombresChoferes = new ArrayList<>();
                                 for (Chofer chofer4 : r.getChoferes()) {
@@ -211,14 +218,14 @@ public class Main {
                                             addText("Tipo de Operacion: Cobro",archivo);
                                             addText("Numero Tarjeta: " + choferDeBusqueda2.getTarjetaCredito().getNumero(),archivo);
                                             addText("Monto: " + (choferDeBusqueda2.getSolicitudActual().getCosto() - choferDeBusqueda2.getSolicitudActual().getCosto()*0.1),archivo);
-                                            addText("Fecha: " + choferDeBusqueda2.getSolicitudActual().getFecha().getYear() + "/" + choferDeBusqueda2.getSolicitudActual().getFecha().getMonth() + "/" + choferDeBusqueda2.getSolicitudActual().getFecha().getDay(), archivo);
+                                            addText("Fecha: " + choferDeBusqueda2.getSolicitudActual().getFecha().getYear() + "/" + choferDeBusqueda2.getSolicitudActual().getFecha().getMonth() + "/" + choferDeBusqueda2.getSolicitudActual().getFecha().getDate(), archivo);
                                             addText("----------------------------------------------------", archivo);
 
                                             addText("Identificador de Operacion: " + (int)(Math.random()*1000000),archivo);
                                             addText("Tipo de Operacion: Pago", archivo);
                                             addText("Numero Tarjeta: " + choferDeBusqueda2.getSolicitudActual().getCliente().getTarjetaCredito().getNumero(),archivo);
                                             addText("Monto: " + (choferDeBusqueda2.getSolicitudActual().getCosto()),archivo);
-                                            addText("Fecha: " + choferDeBusqueda2.getSolicitudActual().getFecha().getYear() + "/" + choferDeBusqueda2.getSolicitudActual().getFecha().getMonth() + "/" + choferDeBusqueda2.getSolicitudActual().getFecha().getDay(), archivo);
+                                            addText("Fecha: " + choferDeBusqueda2.getSolicitudActual().getFecha().getYear() + "/" + choferDeBusqueda2.getSolicitudActual().getFecha().getMonth() + "/" + choferDeBusqueda2.getSolicitudActual().getFecha().getDate(), archivo);
                                             addText("----------------------------------------------------", archivo);
 
                                             otroResultado2 = "N";
