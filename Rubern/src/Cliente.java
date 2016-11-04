@@ -22,12 +22,12 @@ public class Cliente extends Persona{
 
     }
 
-    public Solicitud solicitarViaje(int pasajeros,Point2D coordenadasInicio, Point2D coordenadasDestino, double hora,Date fecha) {
+    public Solicitud solicitarViaje(int pasajeros,Point2D coordenadasInicio, Point2D coordenadasDestino,Date fecha, double hora) {
         if (coordenadasDestino.equals(coordenadasInicio) || this.isViajando()) {
             throw new RuntimeException("El cliente ya se encuentra en el destino o esta actualmente en u viaje.");
 
         } else {
-            return new Solicitud(pasajeros,coordenadasInicio, coordenadasDestino, hora, this,fecha);
+            return new Solicitud(pasajeros,coordenadasInicio, coordenadasDestino,this,fecha,hora);
         }
     }
 

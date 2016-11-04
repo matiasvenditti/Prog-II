@@ -14,16 +14,16 @@ public class Solicitud {
     private double costo;
     private Date fecha;
 
-    public Solicitud(int pasajeros, Point2D inicio, Point2D fin, double hora, Cliente cliente, Date fecha){
+    public Solicitud(int pasajeros, Point2D inicio, Point2D fin, Cliente cliente, Date fecha, double hora){
         this.pasajeros = pasajeros;
         this.inicio = inicio;
         this.fin = fin;
+        this.fecha = fecha;
         this.hora = hora;
-        int identificador= (int) (Math.random()*1000000);
         this.cliente = cliente;
         distancia = Math.sqrt(Math.pow(fin.getxPosition()- inicio.getxPosition(),2)+(Math.pow(fin.getyPosition() - inicio.getyPosition(),2)));
         costo = 15 + (distancia/100);
-        this.fecha = fecha;
+
 
     }
 

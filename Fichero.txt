@@ -1,0 +1,12 @@
+Identificador de Operacion: 740592
+Tipo de Operacion: Cobro
+Numero Tarjeta: 123123
+Monto: 13.67819090885901
+Fecha: 2016/11/1
+----------------------------------------------------
+Identificador de Operacion: 589774
+Tipo de Operacion: Pago
+Numero Tarjeta: 12312
+Monto: 15.197989898732233
+Fecha: 2016/11/1
+----------------------------------------------------

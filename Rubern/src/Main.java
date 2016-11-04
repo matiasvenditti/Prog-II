@@ -54,7 +54,7 @@ public class Main {
         }
 
         r = new Rubern(100,list);
-        PrintWriter archivo = createFile("C:\\Users\\Matias\\Desktop\\Facultad\\Prog II\\Tp prog 2\\Fichero.txt");
+        PrintWriter archivo = createFile("C:\\Users\\Matias\\Desktop\\Facultad\\Prog II\\Tp prog 2\\Test.txt");
         int command = 1;
         while (command != 0) {
             System.out.println("----------------EN MENU PRINCIPAL----------------");
@@ -95,7 +95,7 @@ public class Main {
                                         if (r.getClientes().get(i).getNombre().equals(cliente)) {
                                             System.out.println("----------------CREANDO SOLICITUD DE VIAJE----------------");
                                             clientDeBusqueda = r.getClientes().get(i);
-                                            Solicitud nuevaSolicitud = clientDeBusqueda.solicitarViaje(Scanner.getInt("Cantidad de pasajeros: "), new Point2D(Scanner.getDouble("Posicion inicial en X: "), Scanner.getDouble("Posicion inicial en Y: ")), new Point2D(Scanner.getDouble("Posicion final en X: "), Scanner.getDouble("Posicion final en Y: ")), Scanner.getDouble("Hora de viaje: "), new Date(Scanner.getInt("Año: "), Scanner.getInt("Mes: "), Scanner.getInt("Fecha: ")));
+                                            Solicitud nuevaSolicitud = clientDeBusqueda.solicitarViaje(Scanner.getInt("Cantidad de pasajeros: "), new Point2D(Scanner.getDouble("Posicion inicial en X: "), Scanner.getDouble("Posicion inicial en Y: ")), new Point2D(Scanner.getDouble("Posicion final en X: "), Scanner.getDouble("Posicion final en Y: ")), new Date(Scanner.getInt("Año: "), Scanner.getInt("Mes: "), Scanner.getInt("Fecha: ")), Scanner.getDouble("Hora de viaje: "));
                                             System.out.println("--------------------------------");
                                             r.iniciarViaje(nuevaSolicitud);
                                             result = "N";
