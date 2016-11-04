@@ -54,7 +54,7 @@ public class Main {
         }
 
         r = new Rubern(100,list);
-        PrintWriter archivo = createFile("C:\\Users\\Matias\\Desktop\\Facultad\\Prog II\\Tp prog 2\\Test.txt");
+        PrintWriter archivo = createFile("C:\\Users\\Matias\\Desktop\\Facultad\\Prog II\\Tp prog 2\\Fichero.txt");
         int command = 1;
         while (command != 0) {
             System.out.println("----------------EN MENU PRINCIPAL----------------");

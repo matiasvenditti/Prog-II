@@ -3,15 +3,11 @@
  */
 public class Persona {
     private String nombre;
-    private  String telefono;
-    private String email;
     private TarjetaCredito tarjeta;
 
-    public Persona(String unNombre, String unTelefono, String unEmail, TarjetaCredito unaTarjeta){
+    public Persona(String unNombre, TarjetaCredito unaTarjeta){
 
         nombre=unNombre;
-        telefono=unTelefono;
-        email=unEmail;
         tarjeta=unaTarjeta;
     }
 

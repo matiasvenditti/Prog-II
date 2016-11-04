@@ -12,7 +12,7 @@ public class Chofer extends Persona{
     private Solicitud solicitudActual;
 
     public Chofer(String nombre, TarjetaCredito tarjeta, Auto auto){
-        super(nombre, 2112 + "", nombre + "@Rubern.com", tarjeta);
+        super(nombre,tarjeta);
         this.auto = auto;
         estado = new Offline();
         aceptaViaje = false;
