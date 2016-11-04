@@ -6,7 +6,6 @@ public class Persona {
     private  String telefono;
     private String email;
     private TarjetaCredito tarjeta;
-    private boolean libre;
 
     public Persona(String unNombre, String unTelefono, String unEmail, TarjetaCredito unaTarjeta){
 
@@ -16,32 +15,9 @@ public class Persona {
         tarjeta=unaTarjeta;
     }
 
-    public String getNombre(){
+    public String getNombre(){return nombre;}
 
-        return nombre;
-    }
+    public TarjetaCredito getTarjetaCredito(){return tarjeta;}
 
-    public String getTelefono(){
 
-        return telefono;
-    }
-
-    public String getEmail(){
-
-        return email;
-    }
-
-    public TarjetaCredito getTarjetaCredito(){
-
-        return tarjeta;
-    }
-
-    public void setLibre(boolean estado){
-
-        libre=estado;
-    }
-    public boolean estaLibre(){
-
-        return libre;
-    }
 }

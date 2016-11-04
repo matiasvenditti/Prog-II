@@ -1,4 +1,4 @@
-import javax.swing.*;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -51,106 +51,113 @@ public class Main {
             list.add(chofer);
 
         }
-        r = new Rubern(100, list);
+
+        r = new Rubern(100,list);
+        PrintWriter archivo = createFile("C:\\Users\\Matias\\Desktop\\Facultad\\Prog II\\Tp prog 2\\Fichero.txt");
         int command = 1;
         while (command != 0) {
-            System.out.println("1. Para agregar cliente\n2. Para crear una solicitud de viaje.\n3. Para obtener datos de algun cliente.\n4. Para opciones de Choferes.\n5. Para obtener datos de la agencia.\nOtra para salir del programa");
+            System.out.println("----------------EN MENU PRINCIPAL----------------");
+            System.out.println("1. Para opciones de Clientes\n2. Para opciones de Choferes.\n3. Para obtener datos de la agencia.\nOtra para salir del programa");
             command = Scanner.getInt("Ingrese un comando: ");
             switch (command) {
                 case 1:
                     /**
                      * Agrego un cliente nuevo a la lista de clientes de rubern.
                      */
-                    System.out.println("----------------AGREGANDO CLIENTE----------------");
-                    Cliente client = new Cliente(Scanner.getString("Ingrese nombre del cliente: "), new TarjetaCredito(Scanner.getLong("Ingrese numero de tarjeta: "), Scanner.getDouble("Ingrese un saldo: ")));
-                    r.getClientes().add(client);
-                    System.out.println("--------------------------------");
+                    int comando1 = 1;
+                    while (comando1 != 0){
+                        System.out.println("----------------EN MENU CLIENTES----------------");
+                        System.out.println("1. Para agregar cliente\n2. Para crear una solicitud de viaje.\n3. Para obtener datos de algun cliente.\nOtra para volver a menu principal.");
+                        comando1 = Scanner.getInt("Ingrese un comando: ");
+                        switch (comando1){
+                            case 1:
+                                System.out.println("----------------AGREGANDO CLIENTE----------------");
+                                Cliente client = new Cliente(Scanner.getString("Ingrese nombre del cliente: "), new TarjetaCredito(Scanner.getLong("Ingrese numero de tarjeta: "), Scanner.getDouble("Ingrese un saldo: ")));
+                                r.getClientes().add(client);
+                                break;
+                            case 2:
+                                System.out.println("----------------SOLICITANDO UN VIAJE----------------");
+                                ArrayList<String> nombresClientes = new ArrayList<>();
+                                for(Cliente client2: r.getClientes()){
+                                    if (!client2.isViajando()){
+                                        nombresClientes.add(client2.getNombre());
+                                    }
+                                }
+                                System.out.println("Clientes que actualmente no estan en un viaje encontrados en la lista de Rubern : ");
+                                System.out.println(nombresClientes);
+
+                                Cliente clientDeBusqueda = null;
+                                String result = "Y";
+                                while (result.equals("Y")) {
+                                    String cliente = Scanner.getString("Ingrese el nombre del cliente que busca: ");
+                                    for (int i = 0; i < r.getClientes().size(); i++) {
+                                        if (r.getClientes().get(i).getNombre().equals(cliente)) {
+                                            System.out.println("----------------CREANDO SOLICITUD DE VIAJE----------------");
+                                            clientDeBusqueda = r.getClientes().get(i);
+                                            Solicitud nuevaSolicitud = clientDeBusqueda.solicitarViaje(Scanner.getInt("Cantidad de pasajeros: "), new Point2D(Scanner.getDouble("Posicion inicial en X: "), Scanner.getDouble("Posicion inicial en Y: ")), new Point2D(Scanner.getDouble("Posicion final en X: "), Scanner.getDouble("Posicion final en Y: ")), Scanner.getDouble("Hora de viaje: "));
+                                            System.out.println("--------------------------------");
+                                            r.iniciarViaje(nuevaSolicitud);
+                                            result = "N";
+                                        }
+
+                                    }
+                                    if (clientDeBusqueda == null){
+                                        System.out.println("Cliente no encontrado, le gustaria buscar otro?");
+                                        result = Scanner.getString("[Y/N]: ");
+
+
+                                    }
+
+                                }
+                                break;
+
+                            case 3:
+                                System.out.println("----------------OBTENENIENDO DATOS DE CLIENTE----------------");
+                                int size3 = r.getClientes().size();
+                                String[] clientes3 = new String[size3];
+                                for (int i = 0; i<r.getClientes().size(); i++){
+                                    clientes3[i] = r.getClientes().get(i).getNombre();
+                                }
+                                System.out.println("Clientes encontrados en la lista de Rubern: ");
+                                System.out.println(java.util.Arrays.toString(clientes3));
+
+                                Cliente Otrocliente = null;
+                                String Otroresultado = "Y";
+                                while (Otroresultado.equals("Y")) {
+                                    String cliente = Scanner.getString("Ingrese el nombre del cliente que busca: ");
+                                    for (int i = 0; i < r.getClientes().size(); i++) {
+                                        if (r.getClientes().get(i).getNombre().equals(cliente)) {
+                                            Otrocliente = r.getClientes().get(i);
+                                            System.out.println(Otrocliente.getStatus());
+                                            Otroresultado = "N";
+                                        }
+
+
+                                    }
+                                    if (Otrocliente == null){
+                                        System.out.println("Cliente no encontrado, le gustaria buscar otro?");
+                                        Otroresultado = Scanner.getString("[Y/N]: ");
+                                    }
+
+                                }
+                                break;
+
+
+                            default:
+                                comando1 = 0;
+                        }
+
+                    }
                     break;
 
                 case 2:
-                    /**
-                     * Busco un cliente para iniciar un viaje.
-                     */
-                    System.out.println("----------------SOLICITANDO UN VIAJE----------------");
-                    ArrayList<String> nombresClientes = new ArrayList<>();
-                    for(Cliente client2: r.getClientes()){
-                        if (!client2.isViajando()){
-                            nombresClientes.add(client2.getNombre());
-                        }
-                    }
-                    System.out.println("Clientes que actualmente no estan en un viaje encontrados en la lista de Rubern : ");
-                    System.out.println(nombresClientes);
-
-                    Cliente clientDeBusqueda = null;
-                    String result = "Y";
-                    while (result.equals("Y")) {
-                        String cliente = Scanner.getString("Ingrese el nombre del cliente que busca: ");
-                        for (int i = 0; i < r.getClientes().size(); i++) {
-                            if (r.getClientes().get(i).getNombre().equals(cliente)) {
-                                System.out.println("----------------CREANDO SOLICITUD DE VIAJE----------------");
-                                clientDeBusqueda = r.getClientes().get(i);
-                                Solicitud nuevaSolicitud = clientDeBusqueda.solicitarViaje(Scanner.getInt("Cantidad de pasajeros: "), new Point2D(Scanner.getDouble("Posicion inicial en X: "), Scanner.getDouble("Posicion inicial en Y: ")), new Point2D(Scanner.getDouble("Posicion final en X: "), Scanner.getDouble("Posicion final en Y: ")), Scanner.getDouble("Hora de viaje: "));
-                                System.out.println("--------------------------------");
-                                r.iniciarViaje(nuevaSolicitud);
-                                result = "N";
-                            }
-
-                        }
-                        if (clientDeBusqueda == null){
-                            System.out.println("Cliente no encontrado, le gustaria buscar otro?");
-                            result = Scanner.getString("[Y/N]: ");
-
-
-                        }
-                        else{
-                            System.out.println("--------------------------------");
-                        }
-                    }
-                    break;
-
-                case 3:
-                    /**
-                     * Busco un cliente para obtener sus datos.
-                     */
-                    System.out.println("----------------OBTENENIENDO DATOS DE CLIENTE----------------");
-                    int size3 = r.getClientes().size();
-                    String[] clientes3 = new String[size3];
-                    for (int i = 0; i<r.getClientes().size(); i++){
-                        clientes3[i] = r.getClientes().get(i).getNombre();
-                    }
-                    System.out.println("Clientes encontrados en la lista de Rubern: ");
-                    System.out.println(java.util.Arrays.toString(clientes3));
-
-                    Cliente Otrocliente = null;
-                    String Otroresultado = "Y";
-                    while (Otroresultado.equals("Y")) {
-                        String cliente = Scanner.getString("Ingrese el nombre del cliente que busca: ");
-                        for (int i = 0; i < r.getClientes().size(); i++) {
-                            if (r.getClientes().get(i).getNombre().equals(cliente)) {
-                                Otrocliente = r.getClientes().get(i);
-                                System.out.println(Otrocliente.getStatus());
-                                Otroresultado = "N";
-                            }
-
-
-                        }
-                        if (Otrocliente == null){
-                            System.out.println("Cliente no encontrado, le gustaria buscar otro?");
-                            Otroresultado = Scanner.getString("[Y/N]: ");
-                        }
-                        else{
-                            System.out.println("--------------------------------");
-                        }
-                    }
-                    break;
-
-                case 4:
                     /**
                      * Busca un chofer para finalizar el viaje si es que esta viajando, y ademas da su estado.
                      */
 
                     int comando = 1;
                     while(comando != 0) {
+                        System.out.println("----------------EN MENU CHOFERES----------------");
                         System.out.println("1. Para obtener los datos de algun Chofer\n2. Para finalizar el viaje de algun Chofer\nOtro comando para volver al menu principal.");
                         comando = Scanner.getInt("Ingrese un comando: ");
                         switch (comando) {
@@ -177,8 +184,6 @@ public class Main {
                                     if (choferDeBusqueda == null) {
                                         System.out.println("Chofer no encontrado, le gustaria buscar otro?");
                                         otroResultado1 = Scanner.getString("[Y/N]: ");
-                                    } else {
-                                        System.out.println("--------------------------------");
                                     }
                                 }
                                 break;
@@ -200,6 +205,19 @@ public class Main {
                                         if (r.getChoferes().get(i).getNombre().equals(chofer)) {
                                             choferDeBusqueda2 = r.getChoferes().get(i);
                                             choferDeBusqueda2.finalizarViaje(choferDeBusqueda2.getSolicitudActual());
+
+                                            addText("Identificador de Operacion: " + (int)(Math.random()*1000000),archivo);
+                                            addText("Tipo de Operacion: Cobro",archivo);
+                                            addText("Numero Tarjeta: " + choferDeBusqueda2.getTarjetaCredito().getNumero(),archivo);
+                                            addText("Monto: " + (choferDeBusqueda2.getSolicitudActual().getCosto() - choferDeBusqueda2.getSolicitudActual().getCosto()*0.1),archivo);
+                                            addText("----------------------------------------------------", archivo);
+
+                                            addText("Identificador de Operacion: " + (int)(Math.random()*1000000),archivo);
+                                            addText("Tipo de Operacion: Pago", archivo);
+                                            addText("Numero Tarjeta: " + choferDeBusqueda2.getSolicitudActual().getCliente().getTarjetaCredito().getNumero(),archivo);
+                                            addText("Monto: " + (choferDeBusqueda2.getSolicitudActual().getCosto()),archivo);
+                                            addText("----------------------------------------------------", archivo);
+
                                             otroResultado2 = "N";
                                         }
 
@@ -208,8 +226,6 @@ public class Main {
                                     if (choferDeBusqueda2 == null) {
                                         System.out.println("Chofer no encontrado, le gustaria buscar otro?");
                                         otroResultado2 = Scanner.getString("[Y/N]: ");
-                                    } else {
-                                        System.out.println("--------------------------------");
                                     }
 
                                 }
@@ -222,20 +238,40 @@ public class Main {
                     }
                     break;
 
-                case 5:
+                case 3:
                     System.out.println("----------------ESTADO DE LA AGENCIA----------------");
                     System.out.println(r.getStatus());
-                    System.out.println("--------------------------------");
                     break;
 
 
 
                 default:
+                    archivo.close();
                     command = 0;
+
             }
 
         }
 
+
+    }
+
+
+    public static PrintWriter createFile(String name){
+        try{
+            File archivo = new File(name);
+            PrintWriter infoToWrite = new PrintWriter(new BufferedWriter(new FileWriter(archivo)));
+            return infoToWrite;
+        }
+        catch(IOException e){
+            System.out.println("Error de IO");
+            System.exit(0);
+        }
+        return null;
+    }
+
+    public static void addText(String mensaje, PrintWriter archivo){
+        archivo.println(mensaje);
     }
 
 

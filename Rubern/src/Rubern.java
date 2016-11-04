@@ -13,6 +13,7 @@ public class Rubern {
     private double ganancias;
     private ArrayList<Tupla> costosDeImagen;
 
+
     public static void main (String[] args){
         //Hace que se escriba en el fichero de texto los cobros y pagos. Aún quedaría meterlo para que directamente cuando el cliente pague se ejecute.
         EscritorFichero escritor=new EscritorFichero();
@@ -37,6 +38,8 @@ public class Rubern {
     public ArrayList<Chofer> getChoferes() {
         return choferes;
     }
+
+
 
     /**
      * Por cada chofer disponible, y dentro de la distancia minima, se calcula el costo de imagen y se añade a una lista de tuplas que

@@ -63,6 +63,7 @@ public class Chofer extends Persona{
         solicitud.getCliente().pagarViaje(solicitud,this);
         System.out.println("Rubern tuvo una ganancia de: " + solicitud.getCosto()*0.1);
 
+
     }
 
     public Solicitud getSolicitudActual() {
