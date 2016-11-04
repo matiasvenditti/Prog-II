@@ -6,18 +6,20 @@ import java.awt.geom.*;
 public class Auto {
 
 
-
-
-
     private int capacidadMax;
     private Point2D coordenadasAuto;
+    private CategoriaAuto categoria;
 
-    public Auto(int unaCapacidadMaxima, Point2D coordenadasAuto){
+    public Auto(int unaCapacidadMaxima, Point2D coordenadasAuto, CategoriaAuto categoria){
 
         capacidadMax=unaCapacidadMaxima;
         this.coordenadasAuto = coordenadasAuto;
+        this.categoria = categoria;
     }
 
+    public CategoriaAuto getCategoria() {
+        return categoria;
+    }
 
     public int getCapacidadMax(){
         return capacidadMax;

@@ -54,7 +54,7 @@ public class Chofer extends Persona{
 
     public void finalizarViaje(Solicitud solicitud){
         if (!this.getEstado().isWorking()){
-            throw new RuntimeException("El chofer no se encuentra en ningun viaje.");
+            System.out.println("El chofer no se encuentra en ningun viaje.");
         }
         cambiarEstado(new Online());
         aceptaViaje = false;

@@ -1,3 +1,4 @@
+import java.util.Date;
 
 /**
  * Created by Matias on 11/10/2016.
@@ -21,11 +22,12 @@ public class Cliente extends Persona{
 
     }
 
-    public Solicitud solicitarViaje(int pasajeros,Point2D coordenadasInicio, Point2D coordenadasDestino, double hora) {
-        if (!coordenadasDestino.equals(coordenadasInicio)) {
-            return new Solicitud(pasajeros,coordenadasInicio, coordenadasDestino, hora, this);
+    public Solicitud solicitarViaje(int pasajeros,Point2D coordenadasInicio, Point2D coordenadasDestino, double hora,Date fecha) {
+        if (coordenadasDestino.equals(coordenadasInicio) || this.isViajando()) {
+            throw new RuntimeException("El cliente ya se encuentra en el destino o esta actualmente en u viaje.");
+
         } else {
-            throw new RuntimeException("El cliente ya se encuentra en el destino.");
+            return new Solicitud(pasajeros,coordenadasInicio, coordenadasDestino, hora, this,fecha);
         }
     }
 

@@ -14,13 +14,6 @@ public class Rubern {
     private ArrayList<Tupla> costosDeImagen;
 
 
-    public static void main (String[] args){
-        //Hace que se escriba en el fichero de texto los cobros y pagos. Aún quedaría meterlo para que directamente cuando el cliente pague se ejecute.
-        EscritorFichero escritor=new EscritorFichero();
-        //escritor.escribir();
-    }
-
-
 
     public Rubern(double distanciaMinima, ArrayList<Chofer> choferes){
         this.choferes = choferes;
@@ -50,7 +43,7 @@ public class Rubern {
     public void iniciarViaje(Solicitud solicitud){
         for (Chofer c: choferes){
             if (c.getEstado().isOnline() && (c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()) <= distanciaMinima && solicitud.getPasajeros() <= c.getAuto().getCapacidadMax())){
-                costosDeImagen.add(new Tupla(c,(c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()))/250));
+                costosDeImagen.add(new Tupla(c,((c.getAuto().getCoordenadasAuto().getDistance(solicitud.getInicio()))/(250*c.getAuto().getCategoria().getPorcentajeAdicional()))));
 
             }
             else if (c.getEstado().isOnline() && solicitud.getPasajeros() <= c.getAuto().getCapacidadMax()){

@@ -1,4 +1,4 @@
-
+import java.util.Date;
 
 /**
  * Created by Matias on 11/10/2016.
@@ -12,8 +12,9 @@ public class Solicitud {
     private Cliente cliente;
     private double distancia;
     private double costo;
+    private Date fecha;
 
-    public Solicitud(int pasajeros, Point2D inicio, Point2D fin, double hora, Cliente cliente){
+    public Solicitud(int pasajeros, Point2D inicio, Point2D fin, double hora, Cliente cliente, Date fecha){
         this.pasajeros = pasajeros;
         this.inicio = inicio;
         this.fin = fin;
@@ -22,7 +23,12 @@ public class Solicitud {
         this.cliente = cliente;
         distancia = Math.sqrt(Math.pow(fin.getxPosition()- inicio.getxPosition(),2)+(Math.pow(fin.getyPosition() - inicio.getyPosition(),2)));
         costo = 15 + (distancia/100);
+        this.fecha = fecha;
 
+    }
+
+    public Date getFecha(){
+        return fecha;
     }
 
     public double getDistancia() {
@@ -43,10 +49,6 @@ public class Solicitud {
 
     public Point2D getFin() {
         return fin;
-    }
-
-    public double getFecha() {
-        return hora;
     }
 
     public Cliente getCliente() {

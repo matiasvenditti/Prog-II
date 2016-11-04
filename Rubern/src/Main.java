@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Matias on 14/10/2016.
@@ -46,7 +47,7 @@ public class Main {
         int quantity = Scanner.getInt("Escribir la cantidad de Choferes: ");
         for (int i = 0; i < quantity; i++) {
             System.out.println("----------------AGREGANDO CHOFER NUMERO " + (i+1) + " DE " + quantity + "----------------");
-            Chofer chofer = new Chofer( Scanner.getString("Escribir el nombre del Chofer: "),new TarjetaCredito(Scanner.getLong("Ingrese un numero de tarjeta: "), Scanner.getInt("Ingrese una saldo: ")), new Auto(Scanner.getInt("Ingrese la capacidad maxima del auto: "), new Point2D(Scanner.getDouble("Posicion en X del auto: "), Scanner.getDouble("Posicion en Y del auto: "))));
+            Chofer chofer = new Chofer( Scanner.getString("Escribir el nombre del Chofer: "),new TarjetaCredito(Scanner.getLong("Ingrese un numero de tarjeta: "), Scanner.getInt("Ingrese una saldo: ")), new Auto(Scanner.getInt("Ingrese la capacidad maxima del auto: "), new Point2D(Scanner.getDouble("Posicion en X del auto: "), Scanner.getDouble("Posicion en Y del auto: ")), new CategoriaAuto(Scanner.getString("Categoria del auto: "), Scanner.getDouble("Porcentaje adicional: "))));
             chofer.cambiarEstado(new Online());
             list.add(chofer);
 
@@ -94,7 +95,7 @@ public class Main {
                                         if (r.getClientes().get(i).getNombre().equals(cliente)) {
                                             System.out.println("----------------CREANDO SOLICITUD DE VIAJE----------------");
                                             clientDeBusqueda = r.getClientes().get(i);
-                                            Solicitud nuevaSolicitud = clientDeBusqueda.solicitarViaje(Scanner.getInt("Cantidad de pasajeros: "), new Point2D(Scanner.getDouble("Posicion inicial en X: "), Scanner.getDouble("Posicion inicial en Y: ")), new Point2D(Scanner.getDouble("Posicion final en X: "), Scanner.getDouble("Posicion final en Y: ")), Scanner.getDouble("Hora de viaje: "));
+                                            Solicitud nuevaSolicitud = clientDeBusqueda.solicitarViaje(Scanner.getInt("Cantidad de pasajeros: "), new Point2D(Scanner.getDouble("Posicion inicial en X: "), Scanner.getDouble("Posicion inicial en Y: ")), new Point2D(Scanner.getDouble("Posicion final en X: "), Scanner.getDouble("Posicion final en Y: ")), Scanner.getDouble("Hora de viaje: "), new Date(Scanner.getInt("Año: "), Scanner.getInt("Mes: "), Scanner.getInt("Fecha: ")));
                                             System.out.println("--------------------------------");
                                             r.iniciarViaje(nuevaSolicitud);
                                             result = "N";
@@ -210,12 +211,14 @@ public class Main {
                                             addText("Tipo de Operacion: Cobro",archivo);
                                             addText("Numero Tarjeta: " + choferDeBusqueda2.getTarjetaCredito().getNumero(),archivo);
                                             addText("Monto: " + (choferDeBusqueda2.getSolicitudActual().getCosto() - choferDeBusqueda2.getSolicitudActual().getCosto()*0.1),archivo);
+                                            addText("Fecha: " + choferDeBusqueda2.getSolicitudActual().getFecha().getYear() + "/" + choferDeBusqueda2.getSolicitudActual().getFecha().getMonth() + "/" + choferDeBusqueda2.getSolicitudActual().getFecha().getDay(), archivo);
                                             addText("----------------------------------------------------", archivo);
 
                                             addText("Identificador de Operacion: " + (int)(Math.random()*1000000),archivo);
                                             addText("Tipo de Operacion: Pago", archivo);
                                             addText("Numero Tarjeta: " + choferDeBusqueda2.getSolicitudActual().getCliente().getTarjetaCredito().getNumero(),archivo);
                                             addText("Monto: " + (choferDeBusqueda2.getSolicitudActual().getCosto()),archivo);
+                                            addText("Fecha: " + choferDeBusqueda2.getSolicitudActual().getFecha().getYear() + "/" + choferDeBusqueda2.getSolicitudActual().getFecha().getMonth() + "/" + choferDeBusqueda2.getSolicitudActual().getFecha().getDay(), archivo);
                                             addText("----------------------------------------------------", archivo);
 
                                             otroResultado2 = "N";

@@ -10,4 +10,8 @@ public class CategoriaAuto {
         this.nombre = nombre;
         this.porcentajeAdicional = porcentajeAdicional;
     }
+
+    public double getPorcentajeAdicional() {
+        return porcentajeAdicional;
+    }
 }
